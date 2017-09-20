@@ -54,8 +54,8 @@ defaults[#defaults+1] = {fastloot = {
 	tooltip="Loots items automatically and much faster than the default UI.",
 }}
 
-bdCore:addModule("Bags", defaults)
-local config = bdCore.config["Bags"]
+local config = bdCore:addModule("Bags", defaults)
+--local config = bdCore.config["Bags"]
 local bordersize = bdCore.config['General'].border
 
 core.bagslots = {
