@@ -1,5 +1,5 @@
 local name, core = ...
-local config = bdCore.config["Bags"]
+local config = bdCore.config.profile["Bags"]
 --[[
 for i = 1, 2 do
     select(i, _G["LootFrame"]:GetRegions()):SetAlpha(0)

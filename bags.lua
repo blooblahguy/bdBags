@@ -1,6 +1,6 @@
 local addon, core = ...
-local config = bdCore.config["Bags"]
-local bordersize = bdCore.config['General'].border
+local config = bdCore.config.profile['Bags']
+local bordersize = bdCore.config.profile['General'].border
 
 -- reagent tabs
 for i = 1, 2 do
@@ -83,14 +83,14 @@ ContainerFrame1MoneyFrame:SetScript("OnEnter", function(self)
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -147, 10)
 	
 	local total = 0;
-	for name, stored in pairs(bdCore.config.nr.goldtrack) do
+	for name, stored in pairs(bdCore.config.persistent.goldtrack) do
 		local money, cc = unpack(stored)
 		total = total + money
 	end
 	total = ContainerFrame1MoneyFrame:returnMoney(total)
 	GameTooltip:AddDoubleLine("Total Gold",total,1,1,1, 1,1,1)
 	GameTooltip:AddLine(" ")
-	for name, stored in pairs(bdCore.config.nr.goldtrack) do
+	for name, stored in pairs(bdCore.config.persistent.goldtrack) do
 		local money, cc = unpack(stored)
 		local moneystring = ContainerFrame1MoneyFrame:returnMoney(money)
 		GameTooltip:AddDoubleLine("|c"..cc..name.."|r ",moneystring,1,1,1, 1,1,1)
@@ -129,8 +129,8 @@ function ContainerFrame1MoneyFrame:Update()
 	local color = RAID_CLASS_COLORS[classFileName]
 	moneyString = ContainerFrame1MoneyFrame:returnMoney(money)
 	
-	bdCore.config.nr.goldtrack = bdCore.config.nr.goldtrack or {}
-	bdCore.config.nr.goldtrack[name] = {money, color.colorStr}
+	--bdCore.config.persistent.goldtrack = bdCore.config.persistent.goldtrack or {}
+	bdCore.config.persistent.goldtrack[name] = {money, color.colorStr}
 end
 
 ContainerFrame1MoneyFrame:SetFrameLevel(10)
@@ -155,6 +155,7 @@ function core:bagSort()
 end
 
 function core:bagGenerate(...)
+	config = bdCore.config.profile['Bags']
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
 	for id = 0, 4 do
 		local slots = GetContainerNumSlots(id)
