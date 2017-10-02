@@ -56,7 +56,7 @@ defaults[#defaults+1] = {fastloot = {
 
 bdCore:addModule("Bags", defaults)
 local config = bdCore.config.profile['Bags']
-local bordersize = bdCore.config.profile['General'].border
+local bordersize = bdCore.config.persistent['General'].border
 
 core.bagslots = {
 	CharacterBag0Slot,

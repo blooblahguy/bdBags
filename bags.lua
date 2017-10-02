@@ -1,6 +1,6 @@
 local addon, core = ...
 local config = bdCore.config.profile['Bags']
-local bordersize = bdCore.config.profile['General'].border
+local bordersize = bdCore.config.persistent['General'].border
 
 -- reagent tabs
 for i = 1, 2 do

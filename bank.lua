@@ -1,6 +1,6 @@
 local addon, core = ...
 local config = bdCore.config.profile['Bags']
-local bordersize = bdCore.config.profile['General'].border
+local bordersize = bdCore.config.persistent['General'].border
 
 -- place bank slots in bank bag container
 local lastbutton = nil
