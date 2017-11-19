@@ -154,10 +154,13 @@ function core:bagSort()
 	
 end
 
+SetSortBagsRightToLeft(true)
+SetInsertItemsLeftToRight(false)
+
 function core:bagGenerate(...)
 	config = bdCore.config.profile['Bags']
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
-	for id = 0, 4 do
+	for id = 4, 0, -1 do
 		local slots = GetContainerNumSlots(id)
 		for index = 1, slots do
 			local item = _G["ContainerFrame"..(id+1).."Item"..index]
