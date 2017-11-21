@@ -140,9 +140,6 @@ ContainerFrame1MoneyFrame:HookScript("OnEvent", function()
 	ContainerFrame1MoneyFrame:Update()
 end)
 
-SetInsertItemsLeftToRight(false)
-SetSortBagsRightToLeft(false)
-
 local money = {"Gold","Silver","Copper"}
 for k, v in pairs(money) do
 	_G["ContainerFrame1MoneyFrame"..v.."ButtonText"]:SetFont(bdCore.media.font,14)
@@ -154,13 +151,13 @@ function core:bagSort()
 	
 end
 
-SetSortBagsRightToLeft(true)
+SetSortBagsRightToLeft(false)
 SetInsertItemsLeftToRight(false)
 
 function core:bagGenerate(...)
 	config = bdCore.config.profile['Bags']
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
-	for id = 4, 0, -1 do
+	for id = 0, 4 do
 		local slots = GetContainerNumSlots(id)
 		for index = 1, slots do
 			local item = _G["ContainerFrame"..(id+1).."Item"..index]
