@@ -341,6 +341,7 @@ function core:Draw(frame,size,id)
 		local closebutton = _G[frame:GetName().."CloseButton"]
 		local portrait = _G[frame:GetName().."PortraitButton"]
 		local background = _G[frame:GetName().."BackgroundTop"]
+		local extraslots = _G[frame:GetName().."ExtraBagSlotsHelpBox"]
 
 		frame:SetFrameStrata("HIGH")
 		frame:SetFrameLevel(3)
@@ -350,6 +351,8 @@ function core:Draw(frame,size,id)
 		frame:DisableDrawLayer("ARTWORK")
 		frame:DisableDrawLayer("OVERLAY")
 		frame:DisableDrawLayer("HIGHLIGHT")
+
+		extraslots:Hide()
 
 		core:killShowable(frame.FilterIcon)
 		core:killShowable(frame.ClickableTitleFrame)
