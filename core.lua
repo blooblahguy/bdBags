@@ -58,6 +58,8 @@ bdCore:addModule("Bags", defaults)
 local config = bdCore.config.profile['Bags']
 local bordersize = bdCore.config.persistent['General'].border
 
+BACKPACK_HEIGHT = BACKPACK_HEIGHT or 22
+
 core.bagslots = {
 	CharacterBag0Slot,
 	CharacterBag1Slot,
