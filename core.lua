@@ -352,7 +352,7 @@ function core:Draw(frame,size,id)
 		frame:DisableDrawLayer("OVERLAY")
 		frame:DisableDrawLayer("HIGHLIGHT")
 
-		core:killShowable(fextraslots)
+		core:killShowable(extraslots)
 		core:killShowable(frame.FilterIcon)
 		core:killShowable(frame.ClickableTitleFrame)
 		core:killShowable(closebutton)
