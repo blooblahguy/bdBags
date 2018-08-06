@@ -151,17 +151,34 @@ function core:bagSort()
 	
 end
 
-SetSortBagsRightToLeft(false)
-SetInsertItemsLeftToRight(false)
+SetSortBagsRightToLeft(true)
+SetInsertItemsLeftToRight(true)
 
 function core:bagGenerate(...)
 	config = bdCore.config.profile['Bags']
+
+	local corePack = {}
+	local trashPack = {}
+
+	-- for k, v in pairs(corePack) do
+
+	-- end
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
-	for id = 0, 4 do
+	for id = 4, 0, -1 do
 		local slots = GetContainerNumSlots(id)
+		
 		for index = 1, slots do
 			local item = _G["ContainerFrame"..(id+1).."Item"..index]
 			item:ClearAllPoints()
+			-- item:Hide()
+			local texture, itemCount, locked, quality, readable, lootable, itemLink = GetContainerItemInfo(id, index);
+
+			-- if (quality == nil or quality > 0) then
+			-- 	corePack[#corePack+1] = item
+			-- else
+			-- 	trashPack[#trashPack+1] = item
+			-- end
+
 			item:SetWidth(config.buttonsize)
 			item:SetHeight(config.buttonsize)
 			core:Skin(item)
@@ -183,6 +200,14 @@ function core:bagGenerate(...)
 			lastitem = item
 		end
 	end
+
+	-- local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
+	-- for slot, item in pairs(corePack) do
+	-- -- 	-- print(item:GetName())
+	-- -- 	item:Show()
+	-- -- 	item:ClearAllPoints()
+		
+	-- end
 	
 	-- set bag and bank height
 	core.bags:SetHeight(64+(config.buttonsize-bordersize)*(numrows+1))
