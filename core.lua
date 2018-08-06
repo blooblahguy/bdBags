@@ -53,6 +53,11 @@ defaults[#defaults+1] = {fastloot = {
 	label="Fast Loot",
 	tooltip="Loots items automatically and much faster than the default UI.",
 }}
+defaults[#defaults+1] = {resetgold = {
+	type = "actionbutton",
+	value = "Reset Gold Tracker",
+	callback = function(self) core:resetTracker() end
+}}
 
 bdCore:addModule("Bags", defaults)
 local config = bdCore.config.profile['Bags']
@@ -74,6 +79,9 @@ core.bags:SetPoint("BOTTOMRIGHT", UIParent,"BOTTOMRIGHT", -20, 20)
 core.bank = CreateFrame("frame","bdBank",UIParent)
 core.bank:SetPoint("LEFT", UIParent,"LEFT", 20, 40)
 
+function core:resetTracker()
+	bdCore.config.persistent.goldtrack = {}
+end
 
 function core:redraw()
 	if (core.bags:IsShown()) then
@@ -253,7 +261,13 @@ function core:Skin(frame)
 		C.defaults['bags'] = false
 	end
 	if (frame.skinned) then return end
-	
+
+	-- bdCore:StripTextures(frame, true)
+
+	frame.text = frame:CreateFontString(nil, overlay)
+	frame.text:SetFont(bdCore.media.font, 12, "THINOUTLINE")
+	frame.text:SetAllPoints(frame)
+
 	frame:SetFrameStrata("HIGH")
 	frame:SetFrameLevel(6)
 
@@ -263,9 +277,9 @@ function core:Skin(frame)
 	local icon = _G[frame:GetName().."IconTexture"]
 	local flash = frame.flash
 	normal:SetAllPoints(frame)
-	--[[if (flash) then
-		flash:SetAllPoints(parent)
-	end--]]
+	-- if (flash) then
+	-- 	flash:SetAllPoints(parent)
+	-- end
 	frame:SetAlpha(1)
 	
 	frame:SetNormalTexture("")
@@ -390,6 +404,7 @@ function core:Draw(frame,size,id)
 	core:killShowable(BagHelpBox)
 end
 
+
 -- Make entire bags show or hide when the main bag closes
 ContainerFrame1Item1:HookScript("OnHide",function() core.bags:Hide() end)
 ContainerFrame1Item1:HookScript("OnShow",function() core.bags:Show() end)
@@ -404,7 +419,8 @@ function ToggleBackpack() return end
 function OpenBackpack() return end
 function CloseBackpack() return end
 function updateContainerFrameAnchors() return end
-function ContainerFrame_GenerateFrame(frame, size, id) core:Draw(frame, size, id) end
+function ContainerFrame_GenerateFrame() return end
+-- function ContainerFrame_GenerateFrame(frame, size, id) core:Draw(frame, size, id) end
 function OpenAllBags(frame) ToggleAllBags("open") end
 
 -- Open all Bags
@@ -426,5 +442,59 @@ function ToggleAllBags(func)
 			core.bags:Show()
 		end
 	end
+
+	core:bagGenerate()
 end
 BackpackTokenFrame:Hide();
+
+-- Make entire bags show or hide when the main bag closes
+--[[
+ContainerFrame1Item1:HookScript("OnHide",function() core.bags:Hide() end)
+ContainerFrame1Item1:HookScript("OnShow",function() core.bags:Show() end)
+BankFrame:HookScript("OnHide",function() ToggleAllBags() end)
+BankFrame:HookScript("OnShow",function() ToggleAllBags() end)
+hooksecurefunc(BankFrame,"Show",function() ToggleAllBags() end)
+hooksecurefunc(BankFrame,"Hide",function() ToggleAllBags() end)
+--]]
+
+-- Hijack blizzard functions
+-- function ToggleBag() return end
+-- function ToggleBackpack() return end
+-- function OpenBackpack() return end
+-- function CloseBackpack() return end
+-- function updateContainerFrameAnchors() return end
+-- function ContainerFrame_GenerateFrame() return end
+-- BackpackTokenFrame:Hide();
+
+--[[
+-- Open all Bags
+local togglemain, togglebank = 0,0
+-- function core:HideAll()
+function core:toggleAllBags(force)
+	-- show all bags
+	if (BankFrame:IsShown()) then
+		core.bank:Show()
+		core.bags:Show()
+		for i=0, NUM_CONTAINER_FRAMES, 1 do OpenBag(i) end
+	else -- show only main backpack
+		if (core.bags:IsShown() and not force) then
+			for i=0, NUM_CONTAINER_FRAMES, 1 do CloseBag(i) end
+			core.bags:Hide()
+			core.bank:Hide()
+			CloseBankFrame()
+		else
+			for i=0, NUM_CONTAINER_FRAMES, 1 do OpenBag(i) end
+			core.bags:Show()
+		end
+	end
+
+	core:bagGenerate()
+end--]]
+
+
+
+-- function OpenAllBags(frame) ToggleAllBags(true) end
+-- function ContainerFrame_GenerateFrame(frame, size, id) core:Draw(frame, size, id) end
+
+-- hooksecurefunc("ToggleAllBags", core.toggleAllBags)
+-- hooksecurefunc("OpenAllBags", core.toggleAllBags)

@@ -151,16 +151,84 @@ function core:bagSort()
 	
 end
 
-SetSortBagsRightToLeft(false)
-SetInsertItemsLeftToRight(false)
+SetSortBagsRightToLeft(true)
+SetInsertItemsLeftToRight(true)
 
-function core:bagGenerate(...)
-	config = bdCore.config.profile['Bags']
+function core:bagGenerate()
+	local config = bdCore.config.profile['Bags']
+
+	-- todo: expand drastically
+	local bagSlots = {}
+	local openSlots = {}
+	local usedSlots = {}
+
+	for bagID = 4, 0, -1 do
+		local numSlots = GetContainerNumSlots(bagID)
+		for slot = numSlots, 1, -1 do
+			local texture, itemCount, locked, quality, readable, lootable, itemLink = GetContainerItemInfo(bagID, slot);
+			local item = _G["ContainerFrame"..(bagID+1).."Item"..slot]
+			local frame = _G["ContainerFrame"..(bagID+1)]
+			-- print(frame)
+			frame:SetID(bagID);
+
+			item:ClearAllPoints()
+			if (itemLink == nil) then
+				openSlots[#openSlots + 1] = {bagID, slot}
+					-- print("ContainerFrame"..(bagID+1).."Item"..slot, texture, itemLink, quality)
+			else
+				usedSlots[#usedSlots + 1] = {bagID, slot}
+			end
+		end
+	end
+
+	-- merge results now
+	for k, v in pairs(usedSlots) do openSlots[(k+#openSlots)] = v end
+	bagSlots = openSlots
+
+	-- now loop and display
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
-	for id = 0, 4 do
-		local slots = GetContainerNumSlots(id)
-		for index = 1, slots do
-			local item = _G["ContainerFrame"..(id+1).."Item"..index]
+	for key, info in pairs(bagSlots) do
+		local bagID, slot = unpack(info)
+
+		local item = _G["ContainerFrame"..(bagID+1).."Item"..slot]
+		item:SetID(slot)
+		item:SetWidth(config.buttonsize)
+		item:SetHeight(config.buttonsize)
+		core:Skin(item)
+		item.text:SetText(bagID..":"..slot)
+		
+		if (not lastitem) then
+			item:SetPoint("TOPLEFT", core.bags, "TOPLEFT", 10, -30)
+			lastrowitem = item
+		else
+			item:SetPoint("LEFT", lastitem, "RIGHT", -bordersize,0)
+			if (numitems == config.buttonsperrow) then
+				item:ClearAllPoints()
+				item:SetPoint("TOP", lastrowitem, "BOTTOM", 0, bordersize)
+				lastrowitem = item
+				numrows = numrows + 1
+				numitems = 0
+			end
+		end
+		numitems = numitems + 1
+		lastitem = item
+	end
+
+	-- set bag and bank height
+	core.bags:SetHeight(64+(config.buttonsize-bordersize)*(numrows+1))
+	core.bags:SetWidth(20+(config.buttonsize-bordersize)*(config.buttonsperrow))
+end
+function core:bagGenerateOld(...)
+	local config = bdCore.config.profile['Bags']
+
+	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
+	for bagID = 4, 0, -1 do
+		local numSlots = GetContainerNumSlots(bagID)
+		for slot = numSlots, 1, -1 do
+			local texture, itemCount, locked, quality, readable, lootable, itemLink = GetContainerItemInfo(bagID, slot);
+			print(bagID, slot, texture, itemLink)
+
+			local item = _G["ContainerFrame"..(bagID+1).."Item"..slot]
 			item:ClearAllPoints()
 			item:SetWidth(config.buttonsize)
 			item:SetHeight(config.buttonsize)
