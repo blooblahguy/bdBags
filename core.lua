@@ -264,9 +264,9 @@ function core:Skin(frame)
 
 	-- bdCore:StripTextures(frame, true)
 
-	frame.text = frame:CreateFontString(nil, overlay)
-	frame.text:SetFont(bdCore.media.font, 12, "THINOUTLINE")
-	frame.text:SetAllPoints(frame)
+	-- frame.text = frame:CreateFontString(nil, overlay)
+	-- frame.text:SetFont(bdCore.media.font, 12, "THINOUTLINE")
+	-- frame.text:SetAllPoints(frame)
 
 	frame:SetFrameStrata("HIGH")
 	frame:SetFrameLevel(6)
@@ -343,7 +343,7 @@ function core:Draw(frame,size,id)
 	frame:Show()
 	
 	--print(id)
-	if (id == 0) then
+	if (id == 4) then
 		core:bagGenerate(frame,size,id)
 	elseif (id == 5) then
 		core:bankGenerate(frame,size,id)
@@ -412,6 +412,15 @@ BankFrame:HookScript("OnHide",function() ToggleAllBags() end)
 BankFrame:HookScript("OnShow",function() ToggleAllBags() end)
 hooksecurefunc(BankFrame,"Show",function() ToggleAllBags() end)
 hooksecurefunc(BankFrame,"Hide",function() ToggleAllBags() end)
+-- hooksecurefunc("SortBags", function()  end)
+
+local evHandler = CreateFrame("frame")
+evHandler:RegisterEvent("BAG_NEW_ITEMS_UPDATED")
+evHandler:SetScript("OnEvent", function()
+	-- print("bnew item")
+	core:bagGenerate()
+end)
+-- hooksecurefunc(BankItemAutoSortButton,"Click",function() function core:bagGenerate() end)
 
 -- Hijack blizzard functions
 function ToggleBag() return end
@@ -419,8 +428,8 @@ function ToggleBackpack() return end
 function OpenBackpack() return end
 function CloseBackpack() return end
 function updateContainerFrameAnchors() return end
-function ContainerFrame_GenerateFrame() return end
--- function ContainerFrame_GenerateFrame(frame, size, id) core:Draw(frame, size, id) end
+-- function ContainerFrame_GenerateFrame() return end
+function ContainerFrame_GenerateFrame(frame, size, id) core:Draw(frame, size, id) end
 function OpenAllBags(frame) ToggleAllBags("open") end
 
 -- Open all Bags
