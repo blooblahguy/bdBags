@@ -1,5 +1,7 @@
 local name, core = ...
-local config = bdCore.config.profile["Bags"]
+local config = bdConfigLib:GetSave('Bags')
+local bordersize = bdConfigLib:GetSave('bdAddons').border
+
 --[[
 for i = 1, 2 do
     select(i, _G["LootFrame"]:GetRegions()):SetAlpha(0)

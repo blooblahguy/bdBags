@@ -64,8 +64,8 @@ bdConfigLib:RegisterModule({
 }, defaults, BD_persistent)
 
 
-local config = bdConfigLib.profile['Bags']
-local bordersize = bdConfigLib.persistent['General'].border
+local config = bdConfigLib:GetSave('Bags')
+local bordersize = bdConfigLib:GetSave('bdAddons').border or 2
 
 BACKPACK_HEIGHT = BACKPACK_HEIGHT or 22
 

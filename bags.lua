@@ -1,6 +1,7 @@
 local addon, core = ...
-local config = bdCore.config.profile['Bags']
-local bordersize = bdCore.config.persistent['General'].border
+local config = bdConfigLib:GetSave('Bags')
+local core_config = bdConfigLib:GetSave('bdAddons')
+local bordersize = bdConfigLib:GetSave('bdAddons').border or 2
 
 -- reagent tabs
 for i = 1, 2 do
@@ -130,7 +131,9 @@ function ContainerFrame1MoneyFrame:Update()
 	moneyString = ContainerFrame1MoneyFrame:returnMoney(money)
 	
 	--bdCore.config.persistent.goldtrack = bdCore.config.persistent.goldtrack or {}
-	bdCore.config.persistent.goldtrack[name] = {money, color.colorStr}
+	-- dump(core_config)
+	core_config.goldtrack = core_config.goldtrack or {}
+	core_config.goldtrack[name] = {money, color.colorStr}
 end
 
 ContainerFrame1MoneyFrame:SetFrameLevel(10)
@@ -242,7 +245,7 @@ end
 
 
 function core:bagGenerate(...)
-	local config = bdCore.config.profile['Bags']
+	-- local config = bdCore.config.profile['Bags']
 
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
 	for bagID = 0, 4 do

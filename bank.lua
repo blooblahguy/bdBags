@@ -1,13 +1,13 @@
 local addon, core = ...
-local config = bdCore.config.profile['Bags']
-local bordersize = bdCore.config.persistent['General'].border
+local config = bdConfigLib:GetSave('Bags')
+local bordersize = bdConfigLib:GetSave('bdAddons').border or 2
 
 -- place bank slots in bank bag container
 local lastbutton = nil
 for i = 1, 7 do
 	local bankbag = BankSlotsFrame["Bag"..i]
 	local icon = bankbag.icon
-	local highlight = bankbag.HighlightFrame.HighlightTexture
+	-- local highlight = bankbag.HighlightFrame.HighlightTexture
 	
 	bankbag:SetParent(core.bank.bags)
 	bankbag:GetChildren():Hide()
