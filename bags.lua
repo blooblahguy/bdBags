@@ -84,14 +84,14 @@ ContainerFrame1MoneyFrame:SetScript("OnEnter", function(self)
 	GameTooltip:SetOwner(self, "ANCHOR_RIGHT", -147, 10)
 	
 	local total = 0;
-	for name, stored in pairs(bdCore.config.persistent.goldtrack) do
+	for name, stored in pairs(core_config.goldtrack) do
 		local money, cc = unpack(stored)
 		total = total + money
 	end
 	total = ContainerFrame1MoneyFrame:returnMoney(total)
 	GameTooltip:AddDoubleLine("Total Gold",total,1,1,1, 1,1,1)
 	GameTooltip:AddLine(" ")
-	for name, stored in pairs(bdCore.config.persistent.goldtrack) do
+	for name, stored in pairs(core_config.goldtrack) do
 		local money, cc = unpack(stored)
 		local moneystring = ContainerFrame1MoneyFrame:returnMoney(money)
 		GameTooltip:AddDoubleLine("|c"..cc..name.."|r ",moneystring,1,1,1, 1,1,1)
