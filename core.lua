@@ -59,12 +59,9 @@ defaults[#defaults+1] = {resetgold = {
 	callback = function(self) core:resetTracker() end
 }}
 
-bdConfigLib:RegisterModule({
+local config = bdConfigLib:RegisterModule({
 	name = "Bags"
 }, defaults, BD_persistent)
-
-
-local config = bdConfigLib:GetSave('Bags')
 local bordersize = bdConfigLib:GetSave('bdAddons').border or 2
 
 BACKPACK_HEIGHT = BACKPACK_HEIGHT or 22
