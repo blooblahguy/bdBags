@@ -54,14 +54,14 @@ defaults[#defaults+1] = {fastloot = {
 	tooltip="Loots items automatically and much faster than the default UI.",
 }}
 defaults[#defaults+1] = {resetgold = {
-	type = "actionbutton",
+	type = "button",
 	value = "Reset Gold Tracker",
 	callback = function(self) core:resetTracker() end
 }}
 
 local config = bdConfigLib:RegisterModule({
 	name = "Bags"
-}, defaults, BD_persistent)
+}, defaults, "BD_persistent")
 local bordersize = bdConfigLib:GetSave('bdAddons').border or 2
 
 BACKPACK_HEIGHT = BACKPACK_HEIGHT or 22
