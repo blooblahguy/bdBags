@@ -380,6 +380,15 @@ function core:Draw(frame,size,id)
 	for i = 1, 5 do				
 		select(i, _G['BankFrame']:GetRegions()):Hide()
 	end
+	for i = 1, 5 do				
+		select(i, _G['BankFrame']:GetChildren()):Hide()
+	end
+	for i = 1, 5 do
+		local child = select(i, _G['BankFrameMoneyFrameInset']:GetChildren())
+		if (not child) then break end
+		child:Hide()
+	end
+	-- _G['BankFrame'].NineSlice:Hide()
 	_G["BackpackTokenFrame"]:GetRegions():SetAlpha(0)
 	
 	

@@ -309,7 +309,6 @@ for k, v in pairs(money) do
 end
 
 function core:bankGenerate(...)
-	config = bdCore.config.profile['Bags']
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
 	
 	-- bank frames
