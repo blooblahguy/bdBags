@@ -154,7 +154,7 @@ function core:bagSort()
 	
 end
 
-/script SetSortBagsRightToLeft(false); SetInsertItemsLeftToRight(false);
+-- /script SetSortBagsRightToLeft(false); SetInsertItemsLeftToRight(false);
 
 SetSortBagsRightToLeft(false)
 SetInsertItemsLeftToRight(false)
