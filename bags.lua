@@ -154,6 +154,8 @@ function core:bagSort()
 	
 end
 
+/script SetSortBagsRightToLeft(false); SetInsertItemsLeftToRight(false);
+
 SetSortBagsRightToLeft(false)
 SetInsertItemsLeftToRight(false)
 
@@ -235,20 +237,16 @@ function core:bagGenerate(...)
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
 	for bagID = 0, 4 do
 		local numSlots = GetContainerNumSlots(bagID)
-		for slot = 1, numSlots do
+
+		local start, finish, step = 1, numSlots, 1
+		if (bagID == 0) then
+			start, finish, step = numSlots, 1, -1
+		end
+		for slot = start, finish, step do
 			local texture, itemCount, locked, quality, readable, lootable, itemLink = GetContainerItemInfo(bagID, slot);
-			-- print(bagID, slot, texture, itemLink)
 
 			local item = _G["ContainerFrame"..(bagID+1).."Item"..slot]
 			item:ClearAllPoints()
-			-- item:Hide()
-			-- local texture, itemCount, locked, quality, readable, lootable, itemLink = GetContainerItemInfo(id, slot);
-
-			-- if (quality == nil or quality > 0) then
-			-- 	corePack[#corePack+1] = item
-			-- else
-			-- 	trashPack[#trashPack+1] = item
-			-- end
 
 			item:SetWidth(config.buttonsize)
 			item:SetHeight(config.buttonsize)
