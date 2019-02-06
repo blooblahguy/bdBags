@@ -5,6 +5,7 @@
 ## LoadOnDemand: 0
 ## Dependencies: bdCore
 
+init.lua
 core.lua
 bags.lua
 bank.lua

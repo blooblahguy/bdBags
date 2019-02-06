@@ -155,32 +155,17 @@ function core:bagSort()
 end
 
 SetSortBagsRightToLeft(false)
-SetInsertItemsLeftToRight(true)
+SetInsertItemsLeftToRight(false)
 
 function core:bagGenerateNew()
 	local config = bdCore.config.profile['Bags']
-
-
-	-- First, let's configure the bags and buttons
-	-- for bagID = 0, 4 do
-	-- 	local frame = _G["ContainerFrame"..(bagID+1)]
-	-- 	local numSlots = GetContainerNumSlots(bagID)
-	-- 	for slot = 1, numSlots do
-	-- 		local itemButton = _G[frame:GetName().."Item"..slot];
-	-- 		itemButton:SetID(slot);
-	-- 	end
-
-	-- 	frame:SetID(bagID);
-	-- 	frame:Show()
-	-- end
-
 
 	-- todo: expand drastically
 	local bagSlots = {}
 	local openSlots = {}
 	local usedSlots = {}
 
-	for bagID = 4, 0, -1 do
+	for bagID = 0, 4 do
 		local numSlots = GetContainerNumSlots(bagID)
 		for slot = numSlots, 1, -1 do
 			-- local texture, itemCount, locked, quality, readable, lootable, itemLink = GetContainerItemInfo(bagID, numSlots-slot+1);
