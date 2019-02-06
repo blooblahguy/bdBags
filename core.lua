@@ -80,6 +80,49 @@ core.bags:SetPoint("BOTTOMRIGHT", UIParent,"BOTTOMRIGHT", -20, 20)
 core.bank = CreateFrame("frame","bdBank",UIParent)
 core.bank:SetPoint("LEFT", UIParent,"LEFT", 20, 40)
 
+-- Needs to be tested/updated
+local familyMap = {}
+familyMap["0x0001"] = "Quiver"
+familyMap["0x0002"] = "Ammo Pouch"
+familyMap["0x0004"] = "Soul Bag"
+familyMap["0x0008"] = "Leatherworking Bag"
+familyMap["0x0010"] = "Inscription Bag"
+familyMap["0x0020"] = "Herb Bag"
+familyMap["0x0040"] = "Enchanting Bag"
+familyMap["0x0080"] = "Engineering Bag"
+familyMap["0x0100"] = "Keyring"
+familyMap["0x0200"] = "Gem Bag"
+familyMap["0x0400"] = "Mining Bag"
+familyMap["0x0800"] = "Unused"
+familyMap["0x1000"] = "Vanity Pets"
+familyMap["0x2000"] = "Unused"
+familyMap["0x4000"] = "Unused"
+familyMap["0x8000"] = "Tackle Box"
+familyMap["0x10000"] = "Cooking Bag"
+
+-- v1 work in progress
+local categories = {}
+table.insert(categories, "Quest")
+table.insert(categories, "Consumable")
+table.insert(categories, "Equipment")
+table.insert(categories, "Enchanting")
+table.insert(categories, "Engineering")
+table.insert(categories, "Mining")
+table.insert(categories, "Gems")
+table.insert(categories, "Fishing")
+table.insert(categories, "Cooking")
+table.insert(categories, "Leatherworking")
+table.insert(categories, "Tailoring")
+table.insert(categories, "Reagents")
+table.insert(categories, "Utility")
+table.insert(categories, "Unfiltered")
+
+function core:GetItemCategory(itemLink)
+	local itemFamily = GetItemFamily(itemLink)
+
+
+end
+
 function core:resetTracker()
 	bdCore.config.persistent.goldtrack = {}
 end

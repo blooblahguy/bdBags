@@ -150,10 +150,6 @@ for k, v in pairs(money) do
 	_G["ContainerFrame1MoneyFrame"..v.."Button"]:SetFrameLevel(8)
 end
 
-function core:bagSort()
-	
-end
-
 -- /script SetSortBagsRightToLeft(false); SetInsertItemsLeftToRight(false);
 
 SetSortBagsRightToLeft(false)
