@@ -232,7 +232,7 @@ function core:IconBorder(border)
 	local newitem = parent.NewItemTexture;
 	local battlepay = parent.BattlepayItemTexture;
 	local r, g, b = border:GetVertexColor()
-	r, g, b = round(r, 1), round(g, 1), round(b, 1)
+	r, g, b = bdCore:round(r, 1), bdCore:round(g, 1), bdCore:round(b, 1)
 	
 	-- set everything to the bottom of the frame
 	border:SetTexture(bdCore.media.flat)
