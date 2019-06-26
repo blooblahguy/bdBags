@@ -37,6 +37,11 @@ defaults[#defaults+1] = {bankbuttonsperrow = {
 	label="Bank Buttons Per Row",
 	callback = function() core:redraw() end
 }}
+defaults[#defaults+1] = {skinloot = {
+	type="checkbox",
+	value=true,
+	label="Skin the Loot Windows",
+}}
 defaults[#defaults+1] = {autorepair = {
 	type="checkbox",
 	value=true,

@@ -2,14 +2,12 @@ local name, core = ...
 local config = bdConfigLib:GetSave('Bags')
 local bordersize = bdConfigLib:GetSave('bdAddons').border
 
---[[
-for i = 1, 2 do
-    select(i, _G["LootFrame"]:GetRegions()):SetAlpha(0)
-end--]]
-_G["LootFrameCloseButton"]:Hide() -- cba lol
-_G["LootFramePortraitOverlay"]:SetAlpha(0)
-bdCore:StripTextures(LootFrame, true)
 function core:SkinLoot()
+	if (not config.skinloot) then return end
+	_G["LootFrameCloseButton"]:Hide() -- cba lol
+	_G["LootFramePortraitOverlay"]:SetAlpha(0)
+
+	bdCore:StripTextures(LootFrame, true)
 	for i = 1, 50 do
 		local frame = _G['LootButton'..i]
 		if (not frame) then break end
@@ -47,21 +45,38 @@ function core:SkinLoot()
 			frame.skinned = true
 		end
 	end
-end
 
-local i, t = 1, "Interface\\LootFrame\\UI-LootPanel"
+	local i, t = 1, "Interface\\LootFrame\\UI-LootPanel"
 
-while true do
-	local r = select(i, LootFrame:GetRegions())
-	if not r then break end
-	if r.GetText and r:GetText() == ITEMS then
-		r:ClearAllPoints()
-		r:SetPoint("TOP", -12, -19.5)
-	elseif (r.GetTexture and r:GetTexture() == t) then
-		r:Hide()
+	local regions = {LootFrame:GetRegions()}
+	local children = {LootFrame:GetChildren()}
+
+	for k, c in pairs(children) do
+		if (not c:GetName()) then
+			bdCore:StripTextures(c, true)
+		end
 	end
-	i = i + 1
+	for k, r in pairs(regions) do
+		if r then
+			if r.GetText and r:GetText() == ITEMS then
+				r:ClearAllPoints()
+				r:SetPoint("TOP", -12, -19.5)
+			elseif (r.GetTexture) then
+				-- print(r:GetTexture())
+				r:Hide()
+			end
+		end
+	end
+
+	-- while true do
+	-- 	local r = select(i, LootFrame:GetRegions())
+
+		
+	-- 	-- i = i + 1
+	-- end
 end
+core:SkinLoot()
+
 
 local p, r, x, y = "TOP", "BOTTOM", 0, -4
 local buttonHeight = LootButton1:GetHeight() + abs(y)
@@ -136,8 +151,10 @@ end
 hooksecurefunc("LootFrame_UpdateButton", function(index)
 	local texture, item, quantity, quality, locked, isQuestItem, questId, isActive = GetLootSlotInfo(index)
 	local frame = _G["LootButton"..index]
-	_G["LootButton"..index.."IconQuestTexture"]:SetAlpha(0) -- hide that pesky quest item texture
-	_G["LootButton"..index.."NameFrame"]:SetAlpha(0) -- hide sucky fagdrops :D
+	if (config.skinloot) then
+		_G["LootButton"..index.."IconQuestTexture"]:SetAlpha(0) -- hide quest item texture
+		_G["LootButton"..index.."NameFrame"]:SetAlpha(0) -- hide sucky drops :D
+	end
 	if isQuestItem then
 		frame.background:SetVertexColor(1.0, 0.82, 0)
 	else
