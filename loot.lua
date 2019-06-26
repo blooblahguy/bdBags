@@ -219,7 +219,8 @@ fastloot:RegisterEvent("LOOT_OPENED")
 fastloot:SetScript("OnEvent",function()
 	local autoLoot = GetCVar("autoLootDefault") == "0" or true
 
-	if (config.fastloot and (IsShiftKeyDown() == useShift)) then	
+	if (config.fastloot and not  (IsShiftKeyDown() == autoLoot)) then
+		print("here")
 		-- SetCVar("autoLootDefault", "0")
 		local numitems = GetNumLootItems()
         for i = 1, numitems do
