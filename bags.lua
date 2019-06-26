@@ -53,6 +53,7 @@ hooksecurefunc("ContainerFrame_Update", function(frame, id)
 	BagItemSearchBox:SetParent(core.bags)
 	BagItemSearchBox:SetPoint("TOPRIGHT", core.bags.sort, "TOPLEFT", -8, -0)
 	BagItemSearchBox:SetPoint("BOTTOMLEFT", ContainerFrame1MoneyFrame, "BOTTOMRIGHT", 8, -2)
+	BagItemSearchBox.SetPoint = noop
 	--BagItemSearchBoxClearButton:SetPoint("RIGHT", BagItemSearchBox, "RIGHT", -4, 0)
 	
 	BagItemAutoSortButton:Hide();
