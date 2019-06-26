@@ -237,6 +237,7 @@ function core:quickreagent(show)
 	core.bank:SetWidth(20+(config.bankbuttonsize-bordersize)*(config.bankbuttonsperrow))
 
 	local children = {ReagentBankFrame:GetChildren()}
+	children[1]:ClearAllPoints()
 	children[1]:SetPoint("BOTTOM", core.bank, "BOTTOM", 0, 10)
 	children[1]:SetFrameStrata("HIGH")
 	children[1]:SetFrameLevel(3)

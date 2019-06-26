@@ -380,7 +380,7 @@ end
 
 -- Calls when each bag is opened
 function core:Draw(frame,size,id)
-
+	BagItemSearchBox:ClearAllPoints()
 	frame.size = size;
 	for i = 1, size do
 		local index = size - i + 1;
