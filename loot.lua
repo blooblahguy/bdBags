@@ -21,13 +21,17 @@ function core:SkinLoot()
 			local icon = _G['LootButton'..i..'IconTexture']
 			local nf = _G['LootButton'..i..'NameFrame']
 			local quality = frame.IconBorder
-			
-			quality:SetTexture("")
-			quality:Hide()
-			quality:SetAlpha(0)
+			if (quality) then
+				quality:SetTexture("")
+				quality:Hide()
+				quality:SetAlpha(0)
+			end
 			
 			font:SetFont(bdCore.media.font, 14)
-			count:SetFont(bdCore.media.font, 14, 'OUTLINE')
+
+			if (count) then
+				count:SetFont(bdCore.media.font, 14, 'OUTLINE')
+			end
 			
 			frame:SetNormalTexture("")
 			frame:SetPushedTexture("")
@@ -220,8 +224,6 @@ fastloot:SetScript("OnEvent",function()
 	local autoLoot = GetCVar("autoLootDefault") == "0" or true
 
 	if (config.fastloot and not  (IsShiftKeyDown() == autoLoot)) then
-		print("here")
-		-- SetCVar("autoLootDefault", "0")
 		local numitems = GetNumLootItems()
         for i = 1, numitems do
             LootSlot(i)
