@@ -80,10 +80,10 @@ core.bagslots = {
 core.bank = {}
 
 -- Set Up Frames
-core.bags = CreateFrame("frame","bdBags",UIParent)
-core.bags:SetPoint("BOTTOMRIGHT", UIParent,"BOTTOMRIGHT", -20, 20)
-core.bank = CreateFrame("frame","bdBank",UIParent)
-core.bank:SetPoint("LEFT", UIParent,"LEFT", 20, 40)
+core.bags = CreateFrame("frame","bdBags", UIParent)
+core.bags:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -20, 20)
+core.bank = CreateFrame("frame","bdBank", UIParent)
+core.bank:SetPoint("LEFT", UIParent, "LEFT", 20, 40)
 
 -- Needs to be tested/updated
 local familyMap = {}

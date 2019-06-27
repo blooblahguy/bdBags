@@ -50,12 +50,11 @@ end
 -- set the search box every time it tries to move
 hooksecurefunc("ContainerFrame_Update", function(frame, id)
 	BagItemSearchBox:ClearAllPoints()
-	BagItemSearchBox:SetParent(core.bags)
-	BagItemSearchBox:SetPoint("TOPRIGHT", core.bags.sort, "TOPLEFT", -8, -0)
-	BagItemSearchBox:SetPoint("BOTTOMLEFT", ContainerFrame1MoneyFrame, "BOTTOMRIGHT", 8, -2)
-	BagItemSearchBox.SetPoint = noop
-	--BagItemSearchBoxClearButton:SetPoint("RIGHT", BagItemSearchBox, "RIGHT", -4, 0)
-	
+	-- BagItemSearchBox:SetParent(core.bags)
+	-- BagItemSearchBox:SetPoint("TOPRIGHT", core.bags, "TOPRIGHT", -55, -6)
+	BagItemSearchBox:SetPoint("LEFT", ContainerFrame1MoneyFrame, "RIGHT", 8, 0)
+	BagItemSearchBox.SetPoint = function() return false end
+	BagItemSearchBox:SetWidth(200)
 	BagItemAutoSortButton:Hide();
 	
 	core:SkinEditBox(BagItemSearchBox)
