@@ -7,10 +7,10 @@ function core:SkinLoot()
 	_G["LootFrameCloseButton"]:Hide() -- cba lol
 	_G["LootFramePortraitOverlay"]:SetAlpha(0)
 
-	bdCore:StripTextures(LootFrame, true)
 	for i = 1, 50 do
 		local frame = _G['LootButton'..i]
 		if (not frame) then break end
+
 		if (i ~= 1) then
 			frame:ClearAllPoints()
 			frame:SetPoint("TOPLEFT",_G['LootButton'..i-1],"BOTTOMLEFT",0,-2)
@@ -18,7 +18,7 @@ function core:SkinLoot()
 		if (not frame.skinned) then
 			local font = _G['LootButton'..i..'Text']
 			local count = _G['LootButton'..i..'Count']
-			local icon = _G['LootButton'..i..'IconTexture']
+			local icon =  frame.icon
 			local nf = _G['LootButton'..i..'NameFrame']
 			local quality = frame.IconBorder
 			if (quality) then
@@ -41,7 +41,9 @@ function core:SkinLoot()
 			hover:SetAllPoints(frame)
 			frame.hover = hover
 			frame:SetHighlightTexture(hover)
-			icon:SetTexCoord(.1, .9, .1, .9)
+			if (icon) then
+				icon:SetTexCoord(.1, .9, .1, .9)
+			end
 
 			bdCore:setBackdrop(frame)
 			nf:SetAlpha(0)
@@ -53,13 +55,10 @@ function core:SkinLoot()
 	local i, t = 1, "Interface\\LootFrame\\UI-LootPanel"
 
 	local regions = {LootFrame:GetRegions()}
-	local children = {LootFrame:GetChildren()}
+	local child = select(1, LootFrame:GetChildren())
+	local more_regions = {child:GetRegions()}
+	for k, v in pairs(more_regions) do table.insert(regions, v) end
 
-	for k, c in pairs(children) do
-		if (not c:GetName()) then
-			bdCore:StripTextures(c, true)
-		end
-	end
 	for k, r in pairs(regions) do
 		if r then
 			if r.GetText and r:GetText() == ITEMS then
@@ -119,9 +118,11 @@ local function CalculateNumMobsLooted()
 end
 
 local old_LootFrame_Show = LootFrame_Show
+local shared = LootFrame:CreateTexture(nil, "OVERLAY")
+local sharedf = LootFrame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 function LootFrame_Show(self, ...)
 	LootFrameInset:Hide()
-	local maxButtons = floor(UIParent:GetHeight()/LootButton1:GetHeight() * 0.7)
+	local maxButtons = floor(UIParent:GetHeight() / LootButton1:GetHeight() * 0.7)
 	
 	local num = GetNumLootItems()
 	
@@ -129,11 +130,22 @@ function LootFrame_Show(self, ...)
 
 	LootFrame:SetHeight(baseHeight + (num * buttonHeight))
 	for i = 1, num do
-		local button
+		local button = _G["LootButton"..i]
+		if (not button) then
+			button = CreateFrame("Button", "LootButton"..i, LootFrame, "LootButtonTemplate", i)
+			button.IconBorder = shared
+			button.IconOverlay = shared
+			_G[button:GetName().."NormalTexture"] = shared
+			_G[button:GetName().."IconTexture"] = shared
+			_G[button:GetName().."Count"] = sharedf
+			-- print(button, ItemButton, ItemButtonMixin)
+			-- Mixin(button, ItemButtonMixin)
+			-- Mixin(button, ItemButton)
+		end
 		if i > LOOTFRAME_NUMBUTTONS then
-			button = _G["LootButton"..i] or CreateFrame("Button", "LootButton"..i, LootFrame, "LootButtonTemplate", i)
 			LOOTFRAME_NUMBUTTONS = i
 		end
+
 		if i > 1 then
 			button = _G["LootButton"..i]
 			button:ClearAllPoints()

@@ -53,7 +53,8 @@ hooksecurefunc("ContainerFrame_Update", function(frame, id)
 	-- BagItemSearchBox:SetParent(core.bags)
 	-- BagItemSearchBox:SetPoint("TOPRIGHT", core.bags, "TOPRIGHT", -55, -6)
 	BagItemSearchBox:SetPoint("LEFT", ContainerFrame1MoneyFrame, "RIGHT", 8, 0)
-	BagItemSearchBox.SetPoint = function() return false end
+	BagItemSearchBox.ClearAllPoints = noop
+	BagItemSearchBox.SetPoint = noop
 	BagItemSearchBox:SetWidth(200)
 	BagItemAutoSortButton:Hide();
 	
