@@ -1,7 +1,6 @@
 local addon, core = ...
 local config = bdConfigLib:GetSave('Bags')
 local core_config = bdConfigLib:GetSave('bdAddons')
-local bordersize = bdConfigLib:GetSave('bdAddons').border or 2
 
 -- reagent tabs
 for i = 1, 2 do
@@ -13,6 +12,7 @@ end
 
 -- place bag slots in bag container
 for k, f in pairs(core.bagslots) do
+	local bordersize = bdCore:get_border(f)
 	local count = _G[f:GetName().."Count"]
 	local icon = _G[f:GetName().."IconTexture"]
 	local norm = _G[f:GetName().."NormalTexture"]
@@ -157,7 +157,7 @@ SetSortBagsRightToLeft(false)
 SetInsertItemsLeftToRight(false)
 
 function core:bagGenerateNew()
-	local config = bdCore.config.profile['Bags']
+	local bordersize = bdCore:get_border(_G["ContainerFrame1Item1"])
 
 	-- todo: expand drastically
 	local bagSlots = {}
@@ -225,11 +225,9 @@ function core:bagGenerateNew()
 end
 
 
-
-
-
 function core:bagGenerate(...)
 	-- local config = bdCore.config.profile['Bags']
+	local bordersize = bdCore:get_border(_G["ContainerFrame1Item1"])
 
 	local numrows, lastrowitem, numitems, lastitem = 0, nil, 0, nil
 	for bagID = 0, 4 do
